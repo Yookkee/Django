@@ -10,7 +10,13 @@ from django.utils import timezone
 
 
 def index(request):
-    latest_entry_list = Entry.objects.order_by('-pub_date')#[:10]
+    current_user = auth.get_user(request)
+    print(current_user.is_authenticated())
+    if not current_user.is_authenticated():
+        latest_entry_list = {}
+    else:
+        latest_entry_list = Entry.objects.filter(author=current_user).order_by('-pub_date')#[:10]
+        #latest_entry_list = Entry.objects.order_by('-pub_date')#[:10]
     context = {'latest_entry_list': latest_entry_list, 'username': auth.get_user(request).username}
     return render(request, 'blog/index.html', context)
 
@@ -26,7 +32,7 @@ def createpost(request):
         title = request.POST.get('title', '')
         text = request.POST.get('text', '')
         user = auth.get_user(request)
-        if user.is_authenticated() is not None:
+        if not user.is_authenticated():
             args['createpost_error'] = "Login before creating posts!"
             return render_to_response("blog/createpost.html", args)
         elif title is None:
@@ -40,7 +46,5 @@ def createpost(request):
             post = Entry(title=title, text=text, author=user, pub_date=pub_date)
             post.save()
             return redirect('/');
-
-
     else:
         return render_to_response("blog/createpost.html", args)

@@ -10,7 +10,9 @@
     </section>
 </div>
 
-<a href="{% url 'blog_entries:createpost' %}">Create Post</a>
+{% if username %}
+    <a href="{% url 'blog_entries:createpost' %}">Create Post</a>
+{% endif %}
 
 {% if latest_entry_list %}
     <ul>
