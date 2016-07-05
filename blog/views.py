@@ -11,7 +11,6 @@ from django.utils import timezone
 
 def index(request):
     current_user = auth.get_user(request)
-    print(current_user.is_authenticated())
     if not current_user.is_authenticated():
         latest_entry_list = {}
     else:
@@ -48,3 +47,8 @@ def createpost(request):
             return redirect('/');
     else:
         return render_to_response("blog/createpost.html", args)
+
+def deletepost(request, entry_id):
+    entry = Entry.objects.filter(id=entry_id)
+    entry.delete()
+    return redirect("/")

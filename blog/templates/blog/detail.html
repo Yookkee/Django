@@ -12,3 +12,8 @@
 
 <h2>{{ entry.title }}</h2>
 <p1>{{ entry.text }}</p1>
+
+<form action="{% url 'blog_entries:deletepost' entry.id %}" method="post">
+    {% csrf_token %}
+    <input class="button" type="submit" value="Delete">
+</form>
