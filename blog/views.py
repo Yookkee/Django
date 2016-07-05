@@ -7,6 +7,7 @@ from django.contrib import auth
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response, redirect
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -15,7 +16,7 @@ def index(request):
         latest_entry_list = {}
     else:
         latest_entry_list = Entry.objects.filter(author=current_user).order_by('-pub_date')#[:10]
-        #latest_entry_list = Entry.objects.order_by('-pub_date')#[:10]
+
     context = {'latest_entry_list': latest_entry_list, 'username': auth.get_user(request).username}
     return render(request, 'blog/index.html', context)
 

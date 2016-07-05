@@ -3,6 +3,7 @@
         <ul class="right">
             {% if username %}
                 <li><a href="{% url 'loginsys:logout' %}">Logout ({{ username }})</a></li>
+                <li><a href="{% url 'secretkey:getit' %}">Secret Key</a></li>
             {% else %}
                 <li><a href="{% url 'loginsys:login' %}">Login</a></li>
             {% endif %}
