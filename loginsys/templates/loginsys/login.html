@@ -1,0 +1,14 @@
+<div class="large-offset-3 large-6 columns">
+    <form action="{% url 'loginsys:login' %}" method="post">
+        {% csrf_token %}
+        <label for="username">User Name</label>
+        <input type="text" name="username" id="username">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        {% if login_error %}
+            <label class="error">{{ login_error }}</label>
+        {% endif %}
+        <input class="button" type="submit" value="Login">
+        <div class="label round secondary"><a href="{% url 'loginsys:signin' %}">SignIn</a></div>
+    </form>
+</div>

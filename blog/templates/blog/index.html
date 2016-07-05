@@ -1,0 +1,21 @@
+<div class="top-bar">
+    <section class="top-bar-section">
+        <ul class="right">
+            {% if username %}
+                <li><a href="{% url 'loginsys:logout' %}">Logout ({{ username }})</a></li>
+            {% else %}
+                <li><a href="{% url 'loginsys:login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+    </section>
+</div>
+
+{% if latest_entry_list %}
+    <ul>
+    {% for entry in latest_entry_list %}
+        <li><a href="{% url 'blog_entries:detail' entry.id %}">{{ entry.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No blog entries are available.</p>
+{% endif %}
