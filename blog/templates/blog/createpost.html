@@ -1,0 +1,16 @@
+<form action="{% url 'blog_entries:createpost' %}" method="post">
+    {% csrf_token %}
+    <label for="title">Title</label>
+    <input type="text" name="title" id="title">
+    <label for="text">Text</label>
+    <label>
+        <textarea name="text" cols="40" rows="3"></textarea>
+    </label>
+
+    <input class="button" type="submit" value="Create">
+    <p>
+    {% if createpost_error %}
+            <label class="error">{{ createpost_error }}</label>
+    {% endif %}
+    </p>
+</form>

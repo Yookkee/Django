@@ -10,6 +10,8 @@
     </section>
 </div>
 
+<a href="{% url 'blog_entries:createpost' %}">Create Post</a>
+
 {% if latest_entry_list %}
     <ul>
     {% for entry in latest_entry_list %}
