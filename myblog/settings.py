@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog',
     'loginsys',
     'secretkey',
+    'api',
 ]
 
 MIDDLEWARE_CLASSES = [
