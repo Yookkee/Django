@@ -1,7 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.contrib.auth.models import User
 import json
+from django.utils import timezone
 
 # Create your views here.
 from blog.models import Entry
@@ -38,4 +38,40 @@ def list(request, secret_key):
 
     ab['result'] = "ok"
     ab['list'] = list
+    return HttpResponse("{}".format(json.dumps(ab)))
+
+def delete(request, secret_key, post_id):
+    users = User.objects.filter(first_name=secret_key)
+    ab = {}
+    if users.count() == 0:
+        ab['result'] = "Incorrect query"
+        return HttpResponse("{}".format(json.dumps(ab)))
+    else:
+        user = users[0]
+
+    post = Entry.objects.filter(author=user).filter(id=post_id)
+    ab = {}
+    if post.count() == 0:
+        ab['result'] = "Incorrect query"
+        return HttpResponse("{}".format(json.dumps(ab)))
+    else:
+        ab['result'] = "Node deleted"
+        post.delete()
+        return HttpResponse("{}".format(json.dumps(ab)))
+
+def add(request, secret_key, title, text):
+    users = User.objects.filter(first_name=secret_key)
+    ab = {}
+    if users.count() == 0:
+        ab['result'] = "Incorrect query"
+        return HttpResponse("{}".format(json.dumps(ab)))
+    else:
+        user = users[0]
+
+    pub_date = timezone.now()
+    post = Entry(title=title, text=text, author=user, pub_date=pub_date)
+    post.save()
+
+    ab = {}
+    ab['result'] = "New node created"
     return HttpResponse("{}".format(json.dumps(ab)))
